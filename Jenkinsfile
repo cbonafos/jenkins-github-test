@@ -5,7 +5,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'node --version'
+                nodejs(nodeJSInstallationName: 'Node 16 LTS') {
+                    sh 'npm --version'
+                }
             }
         }
     }
