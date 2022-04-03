@@ -3,10 +3,17 @@ pipeline {
     agent any
 
     stages {
-        stage('build') {
+        stage('echo npm version') {
             steps {
                 nodejs(nodeJSInstallationName: 'Node 16 LTS') {
                     sh 'npm --version'
+                }
+            }
+        }
+        stage('test') {
+            steps {
+                nodejs(nodeJSInstallationName: 'Node 16 LTS') {
+                    sh 'npm test'
                 }
             }
         }
