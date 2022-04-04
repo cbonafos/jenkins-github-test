@@ -1,5 +1,5 @@
-import express from "express";
-import cors from "cors";
+import express from 'express';
+import cors from 'cors';
 
 const app = express();
 app.use(cors());
@@ -57,6 +57,33 @@ app.post("/api/posts", (req, res) => {
       error: "Missing required field(s)",
     });
   }
+
+  app.put("/api/posts/:id", (req,res) => {
+    const { title, content } = req.body;
+    const postId = Number(req.params.id);
+
+    if (!title || !content) {
+      return res.status(400).send({
+        error: "Missing required field(s)",
+      });
+    }
+    if (Number.isNaN(postId)) {
+      return res.status(400).send({
+        error: "Post id is not a number",
+      });
+    }
+    const index = posts.findIndex(p => p.id === postId);
+    posts[index].content = content;
+    posts[index].title = title;
+    return res.status(201).send({
+      message: "Post updated",
+    });
+  })
+
+  app.delete('/api/posts/:id', function (req, res) {
+    const arr = posts.filter(item => item.id !== Number(req.params.id))
+    return res.send(arr)
+  });
 
   const id = nextId;
   nextId += 1;

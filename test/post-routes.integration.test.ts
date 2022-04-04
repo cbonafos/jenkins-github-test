@@ -44,4 +44,24 @@ describe("/api/posts routes tests", () => {
       expect(res.body.error).toEqual("Missing required field(s)");
     });
   });
+
+  describe("PUT /api/posts/:id", () => {
+    it("update a post", async () => {
+      const res = await request(app)
+        .put("/api/posts/1")
+        .send({
+          title: "Updated post",
+          content: "This is an updated post",
+        })
+        .expect(201)
+    })
+  })
+
+  test('Should delete a post', async () => {
+    await request(app)
+          .delete('/api/posts/1')
+          .send()
+          .expect(200)
+  });
+
 });
